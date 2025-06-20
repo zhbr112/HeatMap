@@ -3,34 +3,23 @@ using System.Linq;
 
 namespace HeatMap;
 
-/// <summary>
-/// Набор статических дополнительных методов для типа <see cref="LinearPositionsContext"/>
-/// </summary>
 public static class LinearPositionsContextHelper
 {
     private static readonly Random Rnd = new Random();
  
 
-    /// <summary>
-    /// Сформировать синусоидальный набор данных
-    /// </summary>
-    /// <returns></returns>
-    public static LinearPositionsContext CreateSinContext(int countPositions = 2000)
+    public static LinearPositionsContext CreateSinContext(int countPositions = 500)
     {
         var positions = Enumerable.Range(0, countPositions)
-            .Select(x => new LinearPosition((double)x / 100, Math.Sin((double)x / 100)));
+            .Select(x => new LinearPosition((double)x, (Math.Sin((double)x / 10)-1)*50-10));
         var result = new LinearPositionsContext(positions);
         return result;
     }
 
-    /// <summary>
-    /// Сформировать произвольный набор данных
-    /// </summary>
-    /// <returns></returns>
-    public static LinearPositionsContext CreateRandomContext(int countPositions = 101, int maxPower = -10)
+    public static LinearPositionsContext CreateRandomContext(int countPositions = 450, int maxPower = -100)
     {
         var positions = Enumerable.Range(500, countPositions)
-            .Select(x => new LinearPosition((double)x * 10, Rnd.NextDouble() * maxPower - 100));
+            .Select(x => new LinearPosition((double)x * 10, Rnd.NextDouble() * maxPower - 10));
         var result = new LinearPositionsContext(positions);
         return result;
     }

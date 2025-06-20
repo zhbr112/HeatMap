@@ -4,17 +4,10 @@ using System.Linq;
 
 namespace HeatMap;
 
-/// <summary>
-/// Набор расширений для типа <see cref="LinearPositionsContext"/>
-/// </summary>
 public static class LinearPositionsContextExtension
 {
     private static readonly Random _rnd = new Random();
 
-
-    /// <summary>
-    /// Изменить рандомную точку в контекст с данными
-    /// </summary>
     public static LinearPositionsContext UpdateRandomPosition(this LinearPositionsContext sourse)
     {
         var result = sourse.Points!.ToList();
@@ -24,19 +17,8 @@ public static class LinearPositionsContextExtension
         return sourse;
     }
 
-    /// <summary>
-    /// Выполнить сортировку по частоте
-    /// </summary>
-    /// <param name="sourse"></param>
-    /// <returns></returns>
     private static IEnumerable<LinearPosition> GetSortByFrequency(this IEnumerable<LinearPosition> sourse) => sourse.OrderBy(x => x.Frequency);
 
-    /// <summary>
-    /// Выполнить экстерполяцию линейного ряда
-    /// </summary>
-    /// <param name="sourse"> Исходный набор данных </param>
-    /// <param name="settings"> Настройки </param>
-    /// <returns></returns>
     public static IEnumerable<LinearPosition> GetExtrapolation(this IEnumerable<LinearPosition> sourse, GraphSettings settings)
     {
         var sortedPositions = sourse.GetSortByFrequency().ToList();
