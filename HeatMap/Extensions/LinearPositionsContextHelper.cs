@@ -16,9 +16,9 @@ public static class LinearPositionsContextHelper
         return result;
     }
 
-    public static LinearPositionsContext CreateRandomContext(int countPositions = 450, int maxPower = -100)
+    public static LinearPositionsContext CreateRandomContext(int countPositions = 500, int maxPower = -100)
     {
-        var positions = Enumerable.Range(500, countPositions)
+        var positions = Enumerable.Range(0, countPositions)
             .Select(x => new LinearPosition((double)x * 10, Rnd.NextDouble() * maxPower - 10));
         var result = new LinearPositionsContext(positions);
         return result;
