@@ -141,7 +141,7 @@ public partial class HeatMapViewer : Control
         double s = startHsl.S + (endHsl.S - startHsl.S) * normalizedPower;
         double l = startHsl.L + (endHsl.L - startHsl.L) * normalizedPower;
 
-        return HslToRgb(h, s, l, MinPowerColor.A);
+        return HslToColor(h, s, l, MinPowerColor.A);
     }
 
     public static (double H, double S, double L) RgbToHsl(Color color)
@@ -172,7 +172,7 @@ public partial class HeatMapViewer : Control
         return (h, s, l);
     }
 
-    public static Color HslToRgb(double h, double s, double l, byte alpha = 255)
+    public static Color HslToColor(double h, double s, double l, byte alpha = 255)
     {
         double r, g, b;
 
@@ -192,7 +192,7 @@ public partial class HeatMapViewer : Control
         return Color.FromArgb(alpha, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
     }
 
-    private static double HueToRgb(double p, double q, double t)
+    public static double HueToRgb(double p, double q, double t)
     {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
