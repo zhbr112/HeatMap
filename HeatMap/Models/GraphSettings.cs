@@ -40,16 +40,35 @@ public class GraphSettings
     public bool MinHold { get; set; }
 
     /// <summary>
+    /// Включение режима усреднения значений на графике
+    /// </summary>
+    [Description("Режима усреднения")]
+    public bool Average { get; set; }
+
+    /// <summary>
     /// Количество измерений которые удерживаются в режимах Hold (Количество измерений)
     /// </summary>
     [Description("Количество измерений")]
     public int TimeToHold { get; set; }
 
     /// <summary>
-    /// Включение режима усреднения значений на графике
+    /// Количество строк в HeatMap
     /// </summary>
-    [Description("Режима усреднения")]
-    public bool Average { get; set; }
+    [Description("Количество строк")]
+    public int CountRowsHeatmap { get; set; }
+
+
+    /// <summary>
+    /// Цвет минимального уровеня градиента
+    /// </summary>
+    [Description("Цвет инимального уровеня градиента")]
+    public string MinPowerColor { get; set; }
+
+    /// <summary>
+    /// Цвет максимального уровеня градиента
+    /// </summary>
+    [Description("Цвет максимального уровеня градиента")]
+    public string MaxPowerColor { get; set; }
 
     /// <summary>
     /// Минимальный уровень градиента
