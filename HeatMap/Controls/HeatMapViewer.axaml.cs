@@ -96,27 +96,42 @@ public partial class HeatMapViewer : Control
             var currentStripData = stripsToDisplay[^(i + 1)];
             if (currentStripData.Count == 0) continue;
 
-            double cellWidth = Bounds.Width / currentStripData.Count;
-            if (cellWidth < 1.0) cellWidth = 1.0;
-
             for (int j = 0; j < currentStripData.Count; j++)
             {
                 var point = currentStripData[j];
-
                 double pointFreqStart = point.Frequency;
-                double pointFreqEnd = j + 1 < currentStripData.Count ? currentStripData[j + 1].Frequency : 2 * point.Frequency - currentStripData[j - 1].Frequency;
 
-                if (pointFreqEnd < displayFreqStart || pointFreqStart > displayFreqEnd)
+                double pointFreqEnd;
+                if (j + 1 < currentStripData.Count)
                 {
-                    continue;
+                    pointFreqEnd = currentStripData[j + 1].Frequency;
                 }
+                else
+                {
+                    if (currentStripData.Count > 1)
+                    {
+                        double prevPointFreq = currentStripData[j - 1].Frequency;
+                        pointFreqEnd = point.Frequency + (point.Frequency - prevPointFreq);
+                    }
+                    else
+                    {
+                        pointFreqEnd = displayFreqEnd;
+                    }
+                }
+
+                if (pointFreqEnd < displayFreqStart || pointFreqStart > displayFreqEnd) continue;
 
                 int xStart = (int)(((pointFreqStart - displayFreqStart) / displayFreqRange) * pixelWidth);
                 int xEnd = (int)(((pointFreqEnd - displayFreqStart) / displayFreqRange) * pixelWidth);
 
-                if (xStart == xEnd) xEnd = xStart + 1;
+                xStart = Math.Max(0, xStart);
+                xEnd = Math.Min(pixelWidth, xEnd);
 
-                xEnd = Math.Min(xEnd, pixelWidth);
+                if (xStart >= xEnd)
+                {
+                    if (xStart >= pixelWidth) continue;
+                    xEnd = xStart + 1;
+                }
 
                 Color pointColor = ColorConverts.GetColorForPower(
                     point.Power,
@@ -129,6 +144,8 @@ public partial class HeatMapViewer : Control
                 {
                     for (int px = xStart; px < xEnd; px++)
                     {
+                        if (px < 0 || px >= pixelWidth) continue;
+
                         int index = (py * pixelWidth + px) * 4;
                         pixelData[index] = pointColor.B;
                         pixelData[index + 1] = pointColor.G;
